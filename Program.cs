@@ -65,11 +65,7 @@ namespace exerciseLibraryGroup
                         Library.Exit();
                         break;
                     default:
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Wrong input, try again...");
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Thread.Sleep(2000);
+                        Library.ErrorMessage("Invalid input...");
                         break;
                 }
             }
@@ -116,11 +112,7 @@ namespace exerciseLibraryGroup
                     }
                     else
                     {
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Wrong input, both author and title must be provided..");
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Thread.Sleep(2000);
+                        Library.ErrorMessage("You have to enter both title and author..");
                     }
                 }
 
@@ -139,7 +131,14 @@ namespace exerciseLibraryGroup
                 Environment.Exit(0);
             }
 
-            
+            public static void ErrorMessage(string message)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(message);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Thread.Sleep(2000);
+            }
 
         }
         public class Borrower
