@@ -21,6 +21,8 @@ Testa programmet genom att låna ut och återlämna böcker samt visa korrekt in
 Jobba i grupper.
  */
 
+using System.Net;
+
 namespace exerciseLibraryGroup
 {
     internal class Program
@@ -29,7 +31,7 @@ namespace exerciseLibraryGroup
 
         static void Main(string[] args)
         {
-           
+            Library library = new Library();
             bool myBool = true;
             while (myBool)
             {
@@ -49,6 +51,7 @@ namespace exerciseLibraryGroup
                 switch (input)
                 {
                     case 1:
+                        library.AddBook();
                        break;
                     case 2:
                         break;
@@ -74,24 +77,54 @@ namespace exerciseLibraryGroup
         }
        public class Book
         {
-            public required string Title { get; set; }
-            public required string Author { get; set; }
-            public required string Borrow { get; set; }
+            public string Title { get; set; }
+            public string Author { get; set; }
+            public string Borrow { get; set; }
             public bool Status { get; set; }
 
-
-
-
+            public Book(string title, string author) 
+            {
+                Title = title;
+                Author = author;
+                Status = true;
+            }
         }
 
         public class Library
         {
-            public required List<Book> Books { get; set; }//Samuel testar utan public required på listorna
-            public required List<Borrower> Borrowers { get; set; }
+            //public required List<Book> Books { get; set; }//Samuel testar utan public required på listorna
+            //public required List<Borrower> Borrowers { get; set; }
+            List<Book> books { get; } = new List<Book>();
+            List<Borrower> borrowers { get; } = new List<Borrower>();
 
-            public static void AddBook()
+            public void AddBook()
             {
-                return;
+                Console.Clear();
+                while (true)
+                {
+                    Console.WriteLine("What is the name of the book?");
+                    string title = Console.ReadLine();
+                    Console.WriteLine("Who is the author?");
+                    string author = Console.ReadLine();
+                    if(!string.IsNullOrEmpty(author) && !string.IsNullOrEmpty(title)) 
+                    {
+                        Book newBook = new Book(title, author);
+                        books.Add(newBook);
+                        Console.WriteLine("The book has been added.");
+                        Thread.Sleep(1500);
+                        return;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Wrong input, both author and title must be provided..");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Thread.Sleep(2000);
+                    }
+                }
+
+  
             }
 
             public static void BorrowBooks()
@@ -105,6 +138,8 @@ namespace exerciseLibraryGroup
                 Console.WriteLine("Thanks for this time! Shutting down...");
                 Environment.Exit(0);
             }
+
+            
 
         }
         public class Borrower
