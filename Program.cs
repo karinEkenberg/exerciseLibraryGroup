@@ -25,8 +25,11 @@ namespace exerciseLibraryGroup
 {
     internal class Program
     {
+        //static Library library = new Library();
+
         static void Main(string[] args)
         {
+           
             bool myBool = true;
             while (myBool)
             {
@@ -46,7 +49,6 @@ namespace exerciseLibraryGroup
                 switch (input)
                 {
                     case 1:
-                        Console.Clear();
                        break;
                     case 2:
                         break;
@@ -57,10 +59,10 @@ namespace exerciseLibraryGroup
                     case 5:
                         break;
                     case 6:
-                        myBool = false;
-                        Console.WriteLine("Thanks for this time! Shutting down...");
+                        Library.Exit();
                         break;
                     default:
+                        Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Wrong input, try again...");
                         Console.ForegroundColor = ConsoleColor.Green;
@@ -70,12 +72,22 @@ namespace exerciseLibraryGroup
             }
            
         }
-        class Book
+       public class Book
         {
             public required string Title { get; set; }
             public required string Author { get; set; }
             public required string Borrow { get; set; }
             public bool Status { get; set; }
+
+
+
+
+        }
+
+        public class Library
+        {
+            public required List<Book> Books { get; set; }//Samuel testar utan public required på listorna
+            public required List<Borrower> Borrowers { get; set; }
 
             public static void AddBook()
             {
@@ -87,19 +99,20 @@ namespace exerciseLibraryGroup
                 return;
             }
 
-            class Library : Book
+            public static void Exit()//method for shutting down the program
             {
-                public required List<Book> Books { get; set; }//Samuel testar utan public required på listorna
-                public required List<Borrower> Borrowers { get; set; }
+                Console.Clear();
+                Console.WriteLine("Thanks for this time! Shutting down...");
+                Environment.Exit(0);
             }
-            class Borrower : Book
-            {
-                public required string Name { get; set; }
-                public int SocialSecurityNr { get; set; }
-                public required string Titles { get; set; }
 
-            }
         }
+        public class Borrower
+        {
+            public required string Name { get; set; }
+            public int SocialSecurityNr { get; set; }
+            public required string Titles { get; set; }
 
+        }
     }
 }
