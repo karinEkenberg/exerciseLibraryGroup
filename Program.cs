@@ -58,6 +58,7 @@ namespace exerciseLibraryGroup
                     case 3:
                         break;
                     case 4:
+                        library.ShowBooks();
                         break;
                     case 5:
                         break;
@@ -140,6 +141,28 @@ namespace exerciseLibraryGroup
                 Thread.Sleep(2000);
             }
 
+            public void ShowBooks()
+            {
+                Console.Clear();
+                if (books.Count == 0)
+                {
+                    Console.WriteLine("There are no books.");
+                    Thread.Sleep(1500);
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("List of books in the library:");
+                    foreach (var book in books)
+                    {
+                        Console.WriteLine($"Title: {book.Title}, author: {book.Author}.");
+
+                    }
+                }
+                Console.WriteLine("Press X to continue.");
+                while (Console.ReadKey(true).Key != ConsoleKey.X) { }
+                Console.Clear();
+            }
         }
         public class Borrower
         {
