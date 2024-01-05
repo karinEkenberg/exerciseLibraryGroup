@@ -22,6 +22,7 @@ Jobba i grupper.
  */
 
 using System.Net;
+using System.Linq;
 
 namespace exerciseLibraryGroup
 {
@@ -54,6 +55,7 @@ namespace exerciseLibraryGroup
                         library.AddBook();
                        break;
                     case 2:
+                        library.BorrowBooks();
                         break;
                     case 3:
                         break;
@@ -81,16 +83,14 @@ namespace exerciseLibraryGroup
 
             public Book(string title, string author) 
             {
-                Title = title;
-                Author = author;
-                Status = true;
+               this.Title = title;
+                this.Author = author;
+                this.Status = true;
             }
         }
 
         public class Library
         {
-            //public required List<Book> Books { get; set; }//Samuel testar utan public required på listorna
-            //public required List<Borrower> Borrowers { get; set; }
             List<Book> books { get; } = new List<Book>();
             List<Borrower> borrowers { get; } = new List<Borrower>();
 
@@ -116,13 +116,26 @@ namespace exerciseLibraryGroup
                         Library.ErrorMessage("You have to enter both title and author..");
                     }
                 }
-
-  
             }
 
-            public static void BorrowBooks()
+            public void BorrowBooks()
             {
-                return;
+                while (true)
+                {
+                    Console.WriteLine("What book do you wish to borrow?");
+                    string bookWish = Console.ReadLine();
+                    if (books.Any(book => book.Title == bookWish))
+                    {
+                        Console.WriteLine("The book is available.");
+                        books.RemoveAll(book => book.Title == bookWish);
+                        Thread.Sleep(2000);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("The book is not available.");
+                    }
+                }
             }
 
             public static void Exit()//method for shutting down the program
@@ -156,7 +169,6 @@ namespace exerciseLibraryGroup
                     foreach (var book in books)
                     {
                         Console.WriteLine($"Title: {book.Title}, author: {book.Author}.");
-
                     }
                 }
                 Console.WriteLine("Press X to continue.");
@@ -164,11 +176,12 @@ namespace exerciseLibraryGroup
                 Console.Clear();
             }
         }
+
         public class Borrower
         {
-            public required string Name { get; set; }
+            public string Name { get; set; }
             public int SocialSecurityNr { get; set; }
-            public required string Titles { get; set; }
+            public string Titles { get; set; }
 
         }
     }
