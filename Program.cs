@@ -81,7 +81,7 @@ namespace exerciseLibraryGroup
             public string Borrow { get; set; }
             public bool Status { get; set; }
             public string Name { get; set; }
-            public int SocNr { get; set; }
+            public string SocNr { get; set; }
 
             public Book(string title, string author) 
             {
@@ -90,11 +90,7 @@ namespace exerciseLibraryGroup
                 this.Status = true;
             }
 
-            public Borrower(string name, int socNr) 
-            {
-                this.Name = name;
-                this.SocNr = SocNr;
-            }
+     
         }
 
         public class Library
@@ -136,32 +132,32 @@ namespace exerciseLibraryGroup
                     string name = Console.ReadLine();
                     Console.WriteLine("Enter social security number:");
                     string socNr = Console.ReadLine();
-                    if (!string.IsNullOrEmpty(name) && socNr  )
+                    if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(socNr))
                     {
                         Borrower borrow = new Borrower(name, socNr);
                         borrowers.Add(borrow);
                         Console.WriteLine("Your information is saved in our systems.");
-                        continue;
+                        Console.WriteLine("What book do you wish to borrow?");
+                        string bookWish = Console.ReadLine();
+                        if (books.Any(book => book.Title == bookWish))
+                        {
+                            Console.WriteLine("The book is available.");
+                            books.RemoveAll(book => book.Title == bookWish);
+                            Thread.Sleep(2000);
+                            return;
+                        }
+                        else
+                        {
+                            Console.WriteLine("The book is not available.");
+                            return;
+                        }
                     }
                     else
                     {
                         Library.ErrorMessage("Enter valid name and social security number..");
                         continue;
                     }
-                    Console.WriteLine("What book do you wish to borrow?");
-                    string bookWish = Console.ReadLine();
-                    if (books.Any(book => book.Title == bookWish))
-                    {
-                        Console.WriteLine("The book is available.");
-                        books.RemoveAll(book => book.Title == bookWish);
-                        Thread.Sleep(2000);
-                        continue;
-                    }
-                    else
-                    {
-                        Console.WriteLine("The book is not available.");
-                    }
-                    break;   
+      
                 }
             }
 
@@ -207,8 +203,16 @@ namespace exerciseLibraryGroup
         public class Borrower
         {
             public string Name { get; set; }
-            public int SocialSecurityNr { get; set; }
+            public string SocialSecurityNr { get; set; }
             public string Titles { get; set; }
+            public string SocNr { get; set; }
+
+            public Borrower(string name, string socNr)
+            {
+                this.Name = name;
+                this.SocialSecurityNr = socNr;
+                return;
+            }
         }
     }
 }
