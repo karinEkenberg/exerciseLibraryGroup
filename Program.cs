@@ -63,6 +63,7 @@ namespace exerciseLibraryGroup
                         library.ShowBooks();
                         break;
                     case 5:
+                        library.WhoBorrows();
                         break;
                     case 6:
                         Library.Exit();
@@ -88,6 +89,12 @@ namespace exerciseLibraryGroup
                this.Title = title;
                 this.Author = author;
                 this.Status = true;
+            }
+
+            public void Borrower(string name, string socNr)
+            {
+                this.Name = name;
+                this.SocNr = socNr;
             }
 
      
@@ -144,7 +151,7 @@ namespace exerciseLibraryGroup
                             Console.WriteLine("The book is available.");
                             books.RemoveAll(book => book.Title == bookWish);
                             Thread.Sleep(2000);
-                            return;
+                            continue;
                         }
                         else
                         {
@@ -159,6 +166,28 @@ namespace exerciseLibraryGroup
                     }
       
                 }
+            }
+
+            public void WhoBorrows()
+            {
+                Console.Clear();
+                if (borrowers.Count == 0)
+                {
+                    Console.WriteLine("No one has borrowed a book.");
+                    Thread.Sleep(1500);
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("List of borrowers in the library:");
+                    foreach (var borrower in borrowers)
+                    {
+                        Console.WriteLine($"Borrower: {borrower.Name}, social security number: {borrower.SocialSecurityNr}.");
+                    }
+                }
+                Console.WriteLine("Press X to continue.");
+                while (Console.ReadKey(true).Key != ConsoleKey.X) { }
+                Console.Clear();
             }
 
             public static void Exit()//method for shutting down the program
